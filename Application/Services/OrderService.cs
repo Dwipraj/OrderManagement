@@ -44,6 +44,34 @@ namespace Application.Services
 			return _mapper.Map<OrderDto>(result);
 		}
 
+		public async Task<bool> DeleteOrder(int id)
+		{
+			var result = await _unitOfWork.OrderRepository.Delete(id);
+
+			if (!result)
+			{
+				_logger.LogError($"Could not able to delete order with Id {id}");
+				_errorMessage.SetMessage("Could not able to delete the order.");
+				return false;
+			}
+
+			return result;
+		}
+
+		public async Task<List<OrderDto>> GetAllOrders()
+		{
+			var result = await _unitOfWork.OrderRepository.GetAll();
+
+			return _mapper.Map<List<Order>, List<OrderDto>>(result);
+		}
+
+		public async Task<OrderDto> GetOrderById(int id)
+		{
+			var result = await _unitOfWork.OrderRepository.Get(id);
+
+			return _mapper.Map<OrderDto>(result);
+		}
+
 		public async Task<Pagination<OrderDto>> PaginateOrders(OrderPaginationDto paginationDto)
 		{
 			var result = await _unitOfWork.OrderRepository.GetPaginatedResult(paginationDto);

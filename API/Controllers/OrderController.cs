@@ -28,6 +28,21 @@ namespace API.Controllers
 
 		[Authorize]
 		[ServiceFilter(typeof(AdminOrOwnerFilter))]
+		[HttpGet("[action]/{id}")]
+		public async Task<ActionResult<OrderDto>> GetOrder(int id)
+		{
+			var result = await _orderService.GetOrderById(id);
+
+			if (result == null)
+			{
+				return NotFound(new ApiResponse(404, _errorMessage.Message));
+			}
+
+			return Ok(result);
+		}
+
+		[Authorize]
+		[ServiceFilter(typeof(AdminOrOwnerFilter))]
 		[HttpPost("[action]")]
 		public async Task<ActionResult<OrderDto>> PaginateOrder([FromBody] OrderPaginationDto paginationDto)
 		{
@@ -61,6 +76,21 @@ namespace API.Controllers
 			}
 
 			var result = await _orderService.UpdateOrder(order);
+
+			if (!result)
+			{
+				return BadRequest(new ApiResponse(400, _errorMessage.Message));
+			}
+
+			return Ok();
+		}
+
+		[Authorize]
+		[ServiceFilter(typeof(OwnerFilter))]
+		[HttpDelete("[action]/{id}")]
+		public async Task<ActionResult> DeleteOrder(int id)
+		{
+			var result = await _orderService.DeleteOrder(id);
 
 			if (!result)
 			{
