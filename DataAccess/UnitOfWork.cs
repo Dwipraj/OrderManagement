@@ -16,7 +16,10 @@ namespace DataAccess
 		private IDbTransaction _transaction;
         private IOrderRepository _orderRepository;
         private string _username;
-
+        /// <summary>
+        /// As this service is registered as a scoped service it will keep the connection open until.
+        /// </summary>
+        /// <param name="connectionString">Database Connection String</param>
         public UnitOfWork(string connectionString)
 		{
 			_connection = new SqlConnection(connectionString);
@@ -26,6 +29,9 @@ namespace DataAccess
 
 		public IOrderRepository OrderRepository => _orderRepository ??= new OrderRepository(_transaction, _username);
 
+        /// <summary>
+        /// Always remember to call commit after a Command(Create/Update/Delete), otherwise data will not be saved.
+        /// </summary>
 		public void Commit()
         {
             try
@@ -45,6 +51,11 @@ namespace DataAccess
             }
         }
 
+        /// <summary>
+        /// DO NOT CALL Commit() FROM Dispose()
+        /// Yes, if you call Commit() here this will make your code much cleaner.
+        /// But this could also lead to unexpected bugs.
+        /// </summary>
         public void Dispose()
         {
             if (_transaction != null)
@@ -65,6 +76,10 @@ namespace DataAccess
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// This username will persist in current request context and could be user for accessibility verification by repositories.
+        /// </summary>
+        /// <param name="username">Username of the user against whom data access needs to be verified</param>
 		public void SetUsername(string username)
 		{
 			_username = username;

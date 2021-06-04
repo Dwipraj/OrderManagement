@@ -47,6 +47,7 @@ namespace Application.Services
 		public async Task<bool> DeleteOrder(int id)
 		{
 			var result = await _unitOfWork.OrderRepository.Delete(id);
+			_unitOfWork.Commit();
 
 			if (!result)
 			{

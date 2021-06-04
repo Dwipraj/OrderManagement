@@ -36,6 +36,7 @@ namespace API.Middleware
 				context.Response.ContentType = "application/json";
 				context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
 
+				//This will produce detailed errors in Dev Environment only
 				var response = _env.IsDevelopment()
 					? new ApiException((int)HttpStatusCode.InternalServerError, ex.Message, ex.StackTrace.ToString())
 					: new ApiException((int)HttpStatusCode.InternalServerError);

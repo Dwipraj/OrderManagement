@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Core.Entities.DataTransfer
 {
 	/// <summary>
-	/// Base properties of pagination. Inherited classes can use additional property SotyBy of type Enum
+	/// Base properties of pagination. Child classes can use additional property SotyBy of type Enum.
 	/// </summary>
 	public abstract class BasePaginationDto
 	{
@@ -29,6 +29,11 @@ namespace Core.Entities.DataTransfer
 			set => _search = value.ToLower();
 		}
 
+		/// <summary>
+		/// This value must be set using an enum by child classes as this will be more suggestive in SWAGGER documentation.
+		/// As different result set will need different column names.
+		/// So it's best if we let child classes handle the SortBy Column names.
+		/// </summary>
 		public abstract string SortByColumn { get; }
 		public SortByOrderType SortByOrderType { get; set; } = SortByOrderType.ASC;
 		public string SortByOrder { get => SortByOrderType.ToString(); }

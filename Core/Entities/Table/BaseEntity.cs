@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.Table
 {
+	/// <summary>
+	/// This is useful as we are using repository pattern, we can modify the base properties based on action in BaseRepository class
+	/// </summary>
 	public class BaseEntity
 	{
 		public int Id { get; set; }
