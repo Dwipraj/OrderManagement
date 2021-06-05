@@ -27,6 +27,9 @@ namespace DataAccess
 			_transaction = _connection.BeginTransaction();
 		}
 
+        /// <summary>
+        /// New Repositories will be added like this fashion. Don't forget to SET newly added repositories' value to null in ResetRepositories() method.
+        /// </summary>
 		public IOrderRepository OrderRepository => _orderRepository ??= new OrderRepository(_transaction, _username);
 
         /// <summary>
