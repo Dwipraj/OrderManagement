@@ -24,6 +24,8 @@ namespace API.Middleware
 
 		public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
 		{
+			if (context.Result != null) return;
+
 			var role = context.HttpContext.User?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.Role)?.Value;
 			UserRoleType currentUserRole = (UserRoleType)Enum.Parse(typeof(UserRoleType), role);
 			if (currentUserRole != UserRoleType.Admin)

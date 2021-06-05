@@ -19,6 +19,8 @@ namespace API.Middleware
 
 		public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
 		{
+			if (context.Result != null) return;
+
 			var currentUsername = context.HttpContext.User?.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 			_unitOfWork.SetUsername(currentUsername);
 			await next();

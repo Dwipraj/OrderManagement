@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Entities.DataTransfer
 {
-	public class OrderDto
+	public class OrderDto : IBaseInsert
 	{
 		public int Id { get; set; }
 		public string Email { get; set; }

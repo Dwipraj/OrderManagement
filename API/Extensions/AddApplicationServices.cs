@@ -14,6 +14,8 @@ namespace API.Extensions
 			//Filter Registrations
 			services.AddScoped<AdminOrOwnerFilter>();
 			services.AddScoped<OwnerFilter>();
+			//NOTE : This filter will work only if request body is Inherited from IBaseInsert
+			services.AddScoped<InsertFilter>();
 
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 

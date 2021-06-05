@@ -26,12 +26,12 @@ namespace API.Controllers
 		public async Task<ActionResult<UserDto>> Login(LoginDto loginDto)
 		{
 			string username = loginDto.Email;
-			if (username != "dwipraj.1995@gmail.com" && username != "jhon.doe@mail.com" && username != "jane.smith@mail.com")
+			if (username != "admin@mail.com" && username != "jhon.doe@mail.com" && username != "jane.smith@mail.com")
 			{
 				return Unauthorized(new ApiResponse(401, "No such user found"));
 			}
 
-			UserRoleType role = username == "dwipraj.1995@gmail.com" ? UserRoleType.Admin : UserRoleType.User;
+			UserRoleType role = username == "admin@mail.com" ? UserRoleType.Admin : UserRoleType.User;
 
 			return await Task.FromResult(new UserDto
 			{

@@ -52,6 +52,7 @@ namespace API.Controllers
 		}
 
 		[Authorize]
+		[ServiceFilter(typeof(InsertFilter))]
 		[HttpPost("[action]")]
 		public async Task<ActionResult<OrderDto>> CreateOrder([FromBody] OrderDto order)
 		{
